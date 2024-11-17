@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
-import Navbar from '../public/Navbar'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { USER_API_ENDPOINT } from '@/utils/constant'
-import { toast } from 'sonner'
+import React, { useState } from 'react';
+import Navbar from '../public/Navbar';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { USER_API_ENDPOINT } from '@/utils/constant';
+import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '@/redux/authSlice';
+import { Loader2 } from 'lucide-react';
 
 function Login() {
     const [input, setInput] = useState({
@@ -15,7 +18,9 @@ function Login() {
         role: ""
     });
 
+    const { loading } = useSelector((store) => store.auth);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -29,12 +34,14 @@ function Login() {
         }
 
         try {
+            dispatch(setLoading(true)); // Start loading
             const resp = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
                 headers: {
                     "Content-Type": "application/json"
                 },
                 withCredentials: true
             });
+
             if (resp.data.success) {
                 navigate("/");
                 toast.success("Login successful!");
@@ -42,7 +49,11 @@ function Login() {
                 toast.error(resp.data.message || "Login failed. Please try again.");
             }
         } catch (error) {
-            toast.error(error.response?.data?.message || "An error occurred during login.");
+            toast.error(
+                error.response?.data?.message || "An error occurred during login."
+            );
+        } finally {
+            dispatch(setLoading(false)); // End loading
         }
     };
 
@@ -63,6 +74,7 @@ function Login() {
                             onChange={changeEventHandler}
                             placeholder="Enter your email"
                             className="w-full border border-gray-300 rounded-md p-2"
+                            disabled={loading}
                         />
                     </div>
 
@@ -76,10 +88,11 @@ function Login() {
                             onChange={changeEventHandler}
                             placeholder="Enter your password"
                             className="w-full border border-gray-300 rounded-md p-2"
+                            disabled={loading}
                         />
                     </div>
 
-                    {/* Radio Button Group */}
+                    {/* Role Selection */}
                     <div className="mb-4">
                         <Label className="block mb-1">Role</Label>
                         <div className="flex items-center space-x-4">
@@ -91,6 +104,7 @@ function Login() {
                                     checked={input.role === 'student'}
                                     onChange={changeEventHandler}
                                     className="mr-2 cursor-pointer"
+                                    disabled={loading}
                                 />
                                 <Label htmlFor="role-student" className="cursor-pointer">Student</Label>
                             </div>
@@ -102,15 +116,27 @@ function Login() {
                                     checked={input.role === 'recruiter'}
                                     onChange={changeEventHandler}
                                     className="mr-2 cursor-pointer"
+                                    disabled={loading}
                                 />
                                 <Label htmlFor="role-recruiter" className="cursor-pointer">Recruiter</Label>
                             </div>
                         </div>
                     </div>
 
-                    {/* Login Button */}
-                    <Button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md">
-                        Login
+                    {/* Submit Button */}
+                    <Button
+                        type="submit"
+                        className="w-full bg-blue-600 text-white py-2 rounded-md"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Please Wait
+                            </>
+                        ) : (
+                            "Login"
+                        )}
                     </Button>
 
                     {/* Don't have an account? Signup */}
@@ -123,7 +149,7 @@ function Login() {
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
 export default Login;

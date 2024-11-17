@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	darkMode: false, // Disables dark mode class switching
+	darkMode: 'class', // Enables dark mode based on the 'class' strategy
 	content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
 	theme: {
 		extend: {
@@ -10,8 +10,8 @@ module.exports = {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			colors: {
-				background: 'hsl(var(--background, 0, 100%, 100%))', // Forces white background
-				foreground: 'hsl(var(--foreground, 0, 0%, 0%))', // Forces black foreground
+				background: 'hsl(var(--background, 0, 100%, 100%))',
+				foreground: 'hsl(var(--foreground, 0, 0%, 0%))',
 				card: {
 					DEFAULT: 'hsl(var(--card, 0, 100%, 100%))',
 					foreground: 'hsl(var(--card-foreground, 0, 0%, 0%))'

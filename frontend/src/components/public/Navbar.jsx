@@ -18,7 +18,7 @@ function Navbar() {
     };
 
     return (
-        <div className={`navbar ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'} flex items-center justify-between`}>
+        <div className={`navbar ${theme === 'light' ? 'bg-white text-black' : 'dark:bg-slate-800 dark:text-white'} flex items-center justify-between`}>
             {/* Navbar Start */}
             <div className="navbar-start">
                 <div className="dropdown lg:hidden">
