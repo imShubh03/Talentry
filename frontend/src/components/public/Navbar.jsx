@@ -4,10 +4,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { LogOut, User2, Sun, Moon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import store from '@/redux/store';
 
 function Navbar() {
     const [theme, setTheme] = useState('light');
-    const user = false;
+    // const user = false;
+    const { user } = useSelector(store => store.auth)
 
     useEffect(() => {
         document.documentElement.className = theme;
@@ -37,9 +40,9 @@ function Navbar() {
                         tabIndex={0}
                         className={`menu menu-sm dropdown-content mt-3 w-52 p-2 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'} rounded-box`}
                     >
-                        <li><a>Home</a></li>
-                        <li><a>Jobs</a></li>
-                        <li><a>Browse</a></li>
+                        <li><Link to='/' > Home</Link> </li>
+                        <li><Link to='/jobs'> Jobs</Link> </li>
+                        <li><Link to='/browse' > Browse</Link> </li>
                         {!user ? (
                             <>
                                 <Link to="/signup"><Button className="border-2 bg-blue-600 rounded-md">Signup</Button></Link>
@@ -67,7 +70,7 @@ function Navbar() {
                                     <div className="flex flex-col items-start my-0.5">
                                         <div className="flex items-center cursor-pointer">
                                             <User2 />
-                                            <Button variant="link" className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>View Profile</Button>
+                                            <Button variant="link" className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}> <Link to="/profile"> View Profile</Link></Button>
                                         </div>
                                         <div className="flex items-center cursor-pointer">
                                             <LogOut />
@@ -87,9 +90,9 @@ function Navbar() {
             {/* Navbar End for Larger Screens */}
             <div className="navbar-center flex-grow hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 space-x-4">
-                    <li><a>Home</a></li>
-                    <li><a>Jobs</a></li>
-                    <li><a>Browse</a></li>
+                    <li><Link to='/' > Home</Link> </li>
+                    <li><Link to='/jobs'> Jobs</Link> </li>
+                    <li><Link to='/browse' > Browse</Link> </li>
                 </ul>
             </div>
 
@@ -124,7 +127,7 @@ function Navbar() {
                             <div className="flex flex-col items-start my-0.5">
                                 <div className="flex items-center cursor-pointer">
                                     <User2 />
-                                    <Button variant="link" className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>View Profile</Button>
+                                    <Button variant="link" className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}><Link to="/profile"> View Profile</Link></Button>
                                 </div>
                                 <div className="flex items-center cursor-pointer">
                                     <LogOut />
