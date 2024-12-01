@@ -142,11 +142,11 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { name, email, bio, skills } = req.body;
+        console.log(name, email, bio, skills);
+        
 
         // Get user ID from middleware
         const userId = req.id;
-
-        console.log("User ID from request:", userId); // Debugging log
 
         // Find the user by ID
         const user = await User.findById(userId);
@@ -160,11 +160,11 @@ export const updateProfile = async (req, res) => {
         // Update only the provided fields
         if (name) user.name = name;
         if (email) user.email = email;
-        if (bio) user.bio = bio;
 
-        // Convert skills from a comma-separated string to an array if provided
+        // Update the nested profile fields
+        if (bio) user.profile.bio = bio;
         if (skills) {
-            user.skills = skills.split(",").map(skill => skill.trim());
+            user.profile.skills = skills.split(",").map(skill => skill.trim());
         }
 
         // Save the updated user data
@@ -176,10 +176,8 @@ export const updateProfile = async (req, res) => {
             success: true,
             user
         });
-
     } catch (error) {
         console.error("Error:", error);
-        // Return a 500 status code with an error message if something goes wrong
         return res.status(500).json({
             message: "Failed to update profile. Please try again later.",
             success: false

@@ -4,13 +4,19 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Contact, Mail, Pen } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import Appliedjobs from './Appliedjobs.jsx';
+import UpdateProfileDialog from './UpdateProfileDialog.jsx';
+import { useSelector } from 'react-redux';
 
-const skills = ['html', 'css', 'js', 'react'];
+// const skills = ['html', 'css', 'js', 'react'];
 
 function Profile() {
     const haveResume = true;
+    const [open, setOpen] = useState(false)
+
+    const {user} = useSelector(store => store.auth)
+
 
     return (
         <div>
@@ -28,13 +34,13 @@ function Profile() {
                                 />
                             </Avatar>
                             <div  >
-                                <h1 className="text-lg font-bold dark:bg-slate-800 dark:text-white">Full Name</h1>
+                                <h1 className="text-lg font-bold dark:bg-slate-800 dark:text-white">{user?.name}</h1>
                                 <p className="text-sm text-gray-500 dark:bg-slate-800 dark:text-white">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia, dolore itaque sit aliquid veniam ea!
+                                    {user?.profile?.bio}
                                 </p>
                             </div>
                         </div>
-                        <Button className=' bg-white '>
+                        <Button onClick={() => setOpen(true)} className=' bg-white '>
                             <Pen className="w-4 h-4 bg-white text-black " />
                         </Button>
                     </div>
@@ -43,11 +49,7 @@ function Profile() {
                     <div className="space-y-4">
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                             <Mail className="w-4 h-4 dark:bg-slate-800 dark:text-white" />
-                            <span className=' dark:bg-slate-800 dark:text-white'>max@gmail.com</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <Contact className="w-4 h-4 dark:bg-slate-800 dark:text-white" />
-                            <span className=' dark:bg-slate-800 dark:text-white'>9999999999</span>
+                            <span className=' dark:bg-slate-800 dark:text-white'>{user?.email}</span>
                         </div>
                     </div>
 
@@ -55,8 +57,8 @@ function Profile() {
                     <div>
                         <h2 className="text-lg font-semibold">Skills</h2>
                         <div className="flex flex-wrap gap-2 mt-2">
-                            {skills.length !== 0
-                                ? skills.map((item, index) => (
+                            {user?.profile?.skills.length !== 0
+                                ? user?.profile?.skills.map((item, index) => (
                                     <Badge key={index} className="bg-blue-50 text-blue-700">
                                         {item}
                                     </Badge>
@@ -87,6 +89,9 @@ function Profile() {
                         <h1 className="text-lg font-semibold mb-4">Applied Jobs</h1>
                         <Appliedjobs />
                     </div>
+
+                    <UpdateProfileDialog open={open} setOpen={setOpen} />
+
                 </div>
             </div>
         </div>
