@@ -3,14 +3,20 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { LogOut, User2, Sun, Moon } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import store from '@/redux/store';
+import axios from 'axios';
+import { USER_API_ENDPOINT } from '@/utils/constant';
+import { setUser } from '@/redux/authSlice';
+import { toast } from 'sonner';
 
 function Navbar() {
     const [theme, setTheme] = useState('light');
     // const user = false;
     const { user } = useSelector(store => store.auth)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         document.documentElement.className = theme;
@@ -19,6 +25,20 @@ function Navbar() {
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
+
+    const logoutHandler = async () => {
+        try {
+            const res = await axios.get(`${USER_API_ENDPOINT}/logout`, { withCredentials: true });
+            if (res.data.success) {
+                dispatch(setUser(null));
+                navigate("/");
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Logout failed. Please try again.");
+        }
+    };
+    
 
     return (
         <div className={`navbar ${theme === 'light' ? 'bg-white text-black' : 'dark:bg-slate-800 dark:text-white'} flex items-center justify-between`}>
@@ -52,19 +72,19 @@ function Navbar() {
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <Avatar className="cursor-pointer">
-                                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent className={`w-72 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'}`}>
                                     <div className="flex gap-3 mb-2">
                                         <Avatar>
-                                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                            <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                             <AvatarFallback>CN</AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <h4>Shubham Sonake</h4>
-                                            <p className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>Lorem ipsum dolor sit amet.</p>
+                                            <h4>{user?.name}</h4>
+                                            <p className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>{user?.profile?.bio}</p>
                                         </div>
                                     </div>
                                     <div className="flex flex-col items-start my-0.5">
@@ -109,19 +129,19 @@ function Navbar() {
                     <Popover>
                         <PopoverTrigger asChild>
                             <Avatar className="cursor-pointer">
-                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </PopoverTrigger>
                         <PopoverContent className={`w-72 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-800 text-white'}`}>
                             <div className="flex gap-3 mb-2">
                                 <Avatar>
-                                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                    <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <h4>Shubham Sonake</h4>
-                                    <p className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>Lorem ipsum dolor sit amet.</p>
+                                    <h4>{user?.name}</h4>
+                                    <p className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>{user?.profile?.bio}</p>
                                 </div>
                             </div>
                             <div className="flex flex-col items-start my-0.5">
@@ -131,7 +151,7 @@ function Navbar() {
                                 </div>
                                 <div className="flex items-center cursor-pointer">
                                     <LogOut />
-                                    <Button variant="link" className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>Logout</Button>
+                                    <Button onClick={logoutHandler} variant="link" className={`text-sm ${theme === 'light' ? 'text-black' : 'text-white'}`}>Logout</Button>
                                 </div>
                             </div>
                         </PopoverContent>

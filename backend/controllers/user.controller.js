@@ -1,6 +1,8 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
@@ -12,6 +14,11 @@ export const register = async (req, res) => {
                 success: false
             });
         }
+        // cloudinary
+        const file = req.file
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+
 
         // Checking if the user already exists
         const existingUser = await User.findOne({ email });
@@ -30,7 +37,10 @@ export const register = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            role
+            role,
+            profile:{
+                profilePhoto:cloudResponse.secure_url,
+            }
         });
 
         // Send success response
@@ -142,8 +152,22 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { name, email, bio, skills } = req.body;
-        console.log(name, email, bio, skills);
-        
+
+        const file = req.file;
+        if (!file) {
+            return res.status(400).json({
+                message: "No file uploaded.",
+                success: false
+            });
+        }
+
+        // Convert file to Data URI
+        const fileUri = getDataUri(file);
+
+        // Upload file to Cloudinary as raw resource
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+            resource_type: 'raw',
+        });
 
         // Get user ID from middleware
         const userId = req.id;
@@ -161,26 +185,31 @@ export const updateProfile = async (req, res) => {
         if (name) user.name = name;
         if (email) user.email = email;
 
-        // Update the nested profile fields
+        // Update nested profile fields
         if (bio) user.profile.bio = bio;
         if (skills) {
             user.profile.skills = skills.split(",").map(skill => skill.trim());
         }
 
-        // Save the updated user data
+        // Save resume information from Cloudinary response
+        user.profile.resume = cloudResponse.secure_url;  // Save Cloudinary URL
+        user.profile.resumeName = file.originalname; // Save original file name
+
+        // Save updated user data
         await user.save();
 
-        // Return a success response
+        // Return success response
         return res.status(200).json({
             message: "Profile updated successfully.",
             success: true,
             user
         });
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Error updating profile:", error);
         return res.status(500).json({
             message: "Failed to update profile. Please try again later.",
             success: false
         });
     }
 };
+

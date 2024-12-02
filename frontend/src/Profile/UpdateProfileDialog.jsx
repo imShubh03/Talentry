@@ -47,6 +47,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         }
 
         try {
+            setLoading(true)
             const res = await axios.post(
                 `${USER_API_ENDPOINT}/profile/update`,
                 formData,

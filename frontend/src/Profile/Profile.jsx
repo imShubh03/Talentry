@@ -74,10 +74,10 @@ function Profile() {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="#"
+                                href={user?.profile?.resume}
                                 className="text-blue-600 hover:underline text-sm"
                             >
-                                Shubham resume
+                                {user?.profile?.resumeName}
                             </a>
                         ) : (
                             <span className="text-sm text-gray-500">NA</span>
