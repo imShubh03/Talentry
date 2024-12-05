@@ -24,6 +24,7 @@ function Hero() {
                         Empowering professionals to find tailored jobs and connect with top recruiters, effortlessly.
                     </p>
 
+                    
                     {/* Search Component with proper spacing */}
                     <div className="w-full max-w-3xl mx-auto px-4 mb-8">
                         <div className="flex items-stretch gap-0">

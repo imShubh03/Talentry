@@ -2,13 +2,13 @@ import { Badge } from '@/components/ui/badge';
 import React from 'react';
 import { MapPin } from 'lucide-react';
 
-function Latestjobcards() {
+function Latestjobcards({job}) {
     return (
         <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200 dark:bg-slate-800 dark:text-white">
             {/* Company Section */}
             <div className="mb-4">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-semibold text-gray-800 dark:bg-slate-800 dark:text-white">Company Name</h2>
+                    <h2 className="text-lg font-semibold text-gray-800 dark:bg-slate-800 dark:text-white">{job?.company?.name}</h2>
                     <span className="text-sm text-blue-600 font-medium">2 days ago</span>
                 </div>
                 <div className="flex items-center mt-1 text-gray-600">
@@ -19,22 +19,22 @@ function Latestjobcards() {
 
             {/* Job Details Section */}
             <div className="mb-4">
-                <h1 className="text-xl font-bold text-blue-700 mb-2">Job Title</h1>
+                <h1 className="text-xl font-bold text-blue-700 mb-2">{job?.title}</h1>
                 <p className="text-sm text-gray-600 leading-relaxed dark:bg-slate-800 dark:text-white">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, eum.
+                    {job?.description}
                 </p>
             </div>
 
             {/* Badges Section */}
             <div className="flex flex-wrap gap-2 ">
                 <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-slate-800 dark:text-white dark:border-white">
-                    12 positions
+                    {job?.positions} Positions
                 </Badge>
                 <Badge variant="secondary" className="bg-green-50 text-green-700 hover:bg-green-100 dark:bg-slate-800 dark:text-white dark:border-white">
-                    Full Time
+                {job?.jobtype}
                 </Badge>
                 <Badge variant="secondary" className="bg-purple-50 text-purple-700 hover:bg-purple-100 dark:bg-slate-800 dark:text-white dark:border-white">
-                    Remote
+                {job?.location}
                 </Badge>
             </div>
 
