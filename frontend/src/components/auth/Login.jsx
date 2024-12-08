@@ -130,14 +130,16 @@ function Login() {
                         className="w-full bg-blue-600 text-white py-2 rounded-md"
                         disabled={loading}
                     >
-                        {loading ? (
-                            <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Please Wait
-                            </>
-                        ) : (
-                            "Login"
-                        )}
+                        {
+                            loading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Please Wait
+                                </>
+                            ) : (
+                                "Login"
+                            )
+                        }
                     </Button>
 
                     {/* Don't have an account? Signup */}

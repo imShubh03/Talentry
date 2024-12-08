@@ -1,6 +1,7 @@
 import Company from "../models/company.model.js";
 
-
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const registerCompany = async (req, res) => {
     try {
@@ -109,11 +110,24 @@ export const getCompanyById = async (req, res) => {
     }
 };
 
-
 export const updateCompany = async (req, res) => {
     try {
         const companyId = req.params.id;
+
+        // Extract fields from the request body
         const { name, description, location, website } = req.body;
+        const file = req.file;
+
+        let logo;
+
+        // Upload the file to Cloudinary if provided
+        if (file) {
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+                folder: "company_logos", // Optional: specify a folder for better organization
+            });
+            logo = cloudResponse.secure_url;
+        }
 
         // Prepare the fields for updating
         const updatedData = {};
@@ -121,6 +135,7 @@ export const updateCompany = async (req, res) => {
         if (description) updatedData.description = description;
         if (location) updatedData.location = location;
         if (website) updatedData.website = website;
+        if (logo) updatedData.logo = logo;
 
         // Update the company by ID with the provided data
         const updatedCompany = await Company.findByIdAndUpdate(companyId, updatedData, { new: true });
@@ -128,21 +143,20 @@ export const updateCompany = async (req, res) => {
         if (!updatedCompany) {
             return res.status(404).json({
                 message: "Company not found.",
-                success: false
+                success: false,
             });
         }
 
         return res.status(200).json({
             message: "Company updated successfully.",
             success: true,
-            updatedCompany
+            updatedCompany,
         });
-
     } catch (error) {
-        console.log("Error:", error);
+        console.error("Error updating company:", error);
         return res.status(500).json({
             message: "Server error. Please try again later.",
-            success: false
+            success: false,
         });
     }
 };
