@@ -47,13 +47,13 @@ function JobCard({job}) {
         {/* Job Badges */}
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary" className="bg-blue-50 text-blue-700 dark:bg-gray-700 dark:text-white">
-          {job?.positions}
+          {job?.positions} Positions
           </Badge>
           <Badge variant="secondary" className="bg-green-50 text-green-700 dark:bg-gray-700 dark:text-white">
           {job?.jobtype}
           </Badge>
           <Badge variant="secondary" className="bg-purple-50 text-purple-700 dark:bg-gray-700 dark:text-white">
-          {job?.salary}
+          {job?.salary} LPA
           </Badge>
         </div>
       </CardContent>

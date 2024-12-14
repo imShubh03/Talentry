@@ -14,65 +14,99 @@ import CompanySetup from './Admin/CompanySetup.jsx'
 import AdminJobs from './Admin/AdminJobs.jsx'
 import PostJob from './Admin/Postjob'
 import Applicants from './Admin/Applicants.jsx'
+import ProtectedRoute from './Admin/ProtectedRoute'
+import Privacy from './Home/Privacy'
+import TermsOfService from './Home/TermsOfService'
 
 const appRouter = createBrowserRouter([
   {
-    path:'/',
-    element:<Home/>
+    path: '/',
+    element: <Home />,
   },
   {
-    path:'/login',
-    element:<Login/>
+    path: '/login',
+    element: <Login />,
   },
   {
-    path:'/signup',
-    element:<Signup/>
+    path: '/signup',
+    element: <Signup />,
   },
   {
-    path:'/jobs',
-    element:<Jobs/>
+    path: '/jobs',
+    element: <Jobs />,
   },
   {
-    path:"/jobs/:_id",
-    element:<JobDescription/>
+    path: '/jobs/:_id',
+    element: <JobDescription />,
   },
   {
-    path:'/browse',
-    element:<Browse/>
+    path: '/browse',
+    element: <Browse />,
   },
   {
-    path:'/profile',
-    element:<Profile/>
-  },
-  // admin part below
-  {
-    path:'/admin/companies',
-    element:<Companies/>
+    path: '/profile',
+    element: <Profile />,
   },
   {
-    path:'/admin/companies/create',
-    element:<CreateCompanies/>
+    path: '/privacy',
+    element: <Privacy />
   },
   {
-    path:'/admin/companies/:id',
-    element:<CompanySetup/>
+    path:'/terms',
+    element:<TermsOfService/>
+  },
+  // Admin routes protected by ProtectedRoute
+  {
+    path: '/admin/companies',
+    element: (
+      <ProtectedRoute>
+        <Companies />
+      </ProtectedRoute>
+    ),
   },
   {
-    path:'/admin/jobs',
-    element: <AdminJobs/>
+    path: '/admin/companies/create',
+    element: (
+      <ProtectedRoute>
+        <CreateCompanies />
+      </ProtectedRoute>
+    ),
   },
   {
-    path:'/admin/jobs/create',
-    element:<PostJob/>
+    path: '/admin/companies/:id',
+    element: (
+      <ProtectedRoute>
+        <CompanySetup />
+      </ProtectedRoute>
+    ),
   },
   {
-    path:'/admin/jobs/:id/applicants',
-    element:<Applicants/>
-  }
-])
-
+    path: '/admin/jobs',
+    element: (
+      <ProtectedRoute>
+        <AdminJobs />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/jobs/create',
+    element: (
+      <ProtectedRoute>
+        <PostJob />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/admin/jobs/:id/applicants',
+    element: (
+      <ProtectedRoute>
+        <Applicants />
+      </ProtectedRoute>
+    ),
+  },
+]);
 function App() {
-  
+
   return (
     <>
       <div className=' dark:bg-slate-800 dark:text-white'>

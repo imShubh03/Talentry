@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin, GithubIcon } from 'lucide-react';
 
 function Footer() {
     return (
@@ -15,16 +15,16 @@ function Footer() {
                             Connecting talent with opportunities. Your trusted partner in career growth and professional development.
                         </p>
                         <div className="flex items-center space-x-4 pt-4 ">
-                            <a href="#" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
-                                <Facebook size={20} />
+                            <a href="https://github.com/imShubh03" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
+                                <GithubIcon size={20} />
                             </a>
-                            <a href="#" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
+                            <a href="https://x.com/Shubham3102003" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
                                 <Twitter size={20} />
                             </a>
-                            <a href="#" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
+                            <a href="https://www.linkedin.com/in/shubham-sonake-410241231" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
                                 <Linkedin size={20} />
                             </a>
-                            <a href="#" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
+                            <a href="https://www.instagram.com/_shubham17_/" className="text-gray-800 hover:text dark:bg-slate-800 dark:text-white">
                                 <Instagram size={20} />
                             </a>
                         </div>
@@ -35,16 +35,10 @@ function Footer() {
                         <h4 className="text-lg font-semibold text-gray-800 dark:bg-slate-800 dark:text-white">For Job Seekers</h4>
                         <ul className="space-y-2">
                             <li>
-                                <Link to="/browse-jobs" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Browse Jobs</Link>
+                                <Link to="/jobs" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Browse Jobs</Link>
                             </li>
                             <li>
-                                <Link to="/create-profile" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Create Profile</Link>
-                            </li>
-                            <li>
-                                <Link to="/job-alerts" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Job Alerts</Link>
-                            </li>
-                            <li>
-                                <Link to="/career-resources" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Career Resources</Link>
+                                <Link to="/profile" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">View Profile</Link>
                             </li>
                         </ul>
                     </div>
@@ -54,16 +48,10 @@ function Footer() {
                         <h4 className="text-lg font-semibold text-gray-800 dark:bg-slate-800 dark:text-white">For Employers</h4>
                         <ul className="space-y-2">
                             <li>
-                                <Link to="/post-job" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Post a Job</Link>
+                                <Link to="/admin/jobs/create" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Post a Job</Link>
                             </li>
                             <li>
-                                <Link to="/browse-resumes" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Browse Resumes</Link>
-                            </li>
-                            <li>
-                                <Link to="/pricing" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Pricing Plans</Link>
-                            </li>
-                            <li>
-                                <Link to="/recruitment-solutions" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Recruitment Solutions</Link>
+                                <Link to="/admin/jobs" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">Browse Resumes</Link>
                             </li>
                         </ul>
                     </div>
@@ -102,9 +90,6 @@ function Footer() {
                             </Link>
                             <Link to="/terms" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">
                                 Terms of Service
-                            </Link>
-                            <Link to="/sitemap" className="text-gray-600 hover:text-blue-500 transition-colors dark:bg-slate-800 dark:text-white">
-                                Sitemap
                             </Link>
                         </div>
                     </div>

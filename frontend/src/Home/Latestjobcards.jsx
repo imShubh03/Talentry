@@ -1,8 +1,10 @@
 import { Badge } from '@/components/ui/badge';
 import React from 'react';
 import { MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function Latestjobcards({job}) {
+    const navigate = useNavigate()
     return (
         <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200 dark:bg-slate-800 dark:text-white">
             {/* Company Section */}
@@ -40,7 +42,7 @@ function Latestjobcards({job}) {
 
             {/* Apply Button */}
             <div className="mt-4 pt-4 border-t border-gray-100">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200">
+                <button onClick={() => navigate(`/jobs/${job._id}`)}  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200">
                     Apply Now
                 </button>
             </div>
