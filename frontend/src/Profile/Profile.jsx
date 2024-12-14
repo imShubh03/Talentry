@@ -8,10 +8,13 @@ import React, { useState } from 'react';
 import Appliedjobs from './Appliedjobs.jsx';
 import UpdateProfileDialog from './UpdateProfileDialog.jsx';
 import { useSelector } from 'react-redux';
-
+import useGetAppliedJobs from '@/Custom hooks/useGetAppliedJobs.jsx';
 // const skills = ['html', 'css', 'js', 'react'];
 
 function Profile() {
+    
+    useGetAppliedJobs();
+
     const haveResume = true;
     const [open, setOpen] = useState(false)
 

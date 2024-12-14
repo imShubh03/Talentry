@@ -1,8 +1,24 @@
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Appliedjobs = () => {
+    const { allAppliedJobs = [] } = useSelector(store => store.job)
+
+    const getStatusClass = (status) => {
+        switch (status.toLowerCase()) {
+            case 'rejected':
+                return 'bg-red-100 text-red-600'; // Red badge for rejected
+            case 'selected':
+                return 'bg-green-100 text-green-600'; // Green badge for selected
+            case 'pending':
+                return 'bg-yellow-100 text-yellow-600'; // Yellow badge for pending
+            default:
+                return 'bg-gray-100 text-gray-600'; // Default gray badge
+        }
+    };
+
     return (
         <div className="overflow-x-auto shadow-lg rounded-lg p-4">
             <Table className="min-w-full">
@@ -16,16 +32,24 @@ const Appliedjobs = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {[1, 2, 3, 4].map((_, index) => (
-                        <TableRow key={index}>
-                            <TableCell>dd-mm-yyyy</TableCell>
-                            <TableCell>Frontend Developer</TableCell>
-                            <TableCell>Google</TableCell>
-                            <TableCell className="text-right">
-                                <Badge className="bg-green-100 text-green-700">Selected</Badge>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {
+                        allAppliedJobs.length <= 0 ? (
+                            <span>not applied to any job</span>
+                        ) : (
+                            allAppliedJobs.map((appliedJob) => (
+                                <TableRow key={appliedJob._id}>
+                                    <TableCell>{appliedJob?.createdAt.split("T")[0]}</TableCell>
+                                    <TableCell>{appliedJob.job?.title}</TableCell>
+                                    <TableCell>{appliedJob.job?.company?.name}</TableCell>
+                                    <TableCell className="text-right">
+                                        <Badge className={getStatusClass(appliedJob.status)}>
+                                            {appliedJob.status}
+                                        </Badge>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        )
+                    }
                 </TableBody>
             </Table>
         </div>

@@ -24,7 +24,7 @@ function JobCard({job}) {
       <CardHeader className="flex flex-row justify-between items-center px-4 py-3">
         <div className="flex items-center gap-4">
           <Avatar className="w-12 h-12">
-            <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt="Company Logo" />
+            <AvatarImage src={job?.company?.logo} alt="Company Logo" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div>

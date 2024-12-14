@@ -11,6 +11,9 @@ import JobDescription from './Jobs/JobDescription.jsx'
 import Companies from './Admin/Companies.jsx'
 import CreateCompanies from './Admin/CreateCompanies.jsx'
 import CompanySetup from './Admin/CompanySetup.jsx'
+import AdminJobs from './Admin/AdminJobs.jsx'
+import PostJob from './Admin/Postjob'
+import Applicants from './Admin/Applicants.jsx'
 
 const appRouter = createBrowserRouter([
   {
@@ -53,6 +56,18 @@ const appRouter = createBrowserRouter([
   {
     path:'/admin/companies/:id',
     element:<CompanySetup/>
+  },
+  {
+    path:'/admin/jobs',
+    element: <AdminJobs/>
+  },
+  {
+    path:'/admin/jobs/create',
+    element:<PostJob/>
+  },
+  {
+    path:'/admin/jobs/:id/applicants',
+    element:<Applicants/>
   }
 ])
 

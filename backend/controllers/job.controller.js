@@ -2,7 +2,6 @@ import Job from "../models/job.model.js";
 
 // "company": "6728bfcbff0ed6c0fe89cd5a", im getting id but i want all details like name, descr
 // so i use populate
-
 export const postJob = async (req, res) => {
     try {
         const { title, description, requirements, experience, salary, location, jobtype, positions, company } = req.body;
@@ -10,34 +9,33 @@ export const postJob = async (req, res) => {
         if (!title || !description || !requirements || !experience || !salary || !location || !jobtype || !positions || !company) {
             return res.status(400).json({
                 message: 'All fields are required',
-                success: false
+                success: false,
             });
         }
 
         const newJob = await Job.create({
             title,
             description,
-            requirements: requirements.split(","),
+            requirements,
             experience,
             salary,
             location,
             jobtype,
             positions,
             company,
-            created_by: req.id // Ensuring req.id from isAuthenticated is used
+            created_by: req.id, // Assuming req.id contains authenticated user's ID
         });
 
         return res.status(201).json({
             message: 'New Job posted successfully',
             success: true,
-            job: newJob 
+            job: newJob,
         });
-        
     } catch (error) {
         console.error('Error posting job:', error);
         return res.status(500).json({
             message: 'Internal server error',
-            success: false
+            success: false,
         });
     }
 };
@@ -121,7 +119,10 @@ export const getAdminJob = async (req, res) => {
         const adminId = req.id;
 
         // Find jobs created by the logged-in admin
-        const jobs = await Job.find({ created_by: adminId })
+        const jobs = await Job.find({ created_by: adminId }).populate({
+            path:'company',
+            createdAt:-1
+        })
 
         // If no jobs are found for the admin
         if (!jobs) {

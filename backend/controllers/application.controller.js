@@ -1,5 +1,6 @@
 import Application from "../models/application.model.js";
 import Job from "../models/job.model.js";
+import mongoose from "mongoose";
 
 export const applyJob = async (req, res) => {
     try {
@@ -98,12 +99,20 @@ export const getApplicants = async (req, res) => {
     try {
         const jobId = req.params.id;
 
+        // Validate ObjectId
+        if (!mongoose.Types.ObjectId.isValid(jobId)) {
+            return res.status(400).json({
+                message: 'Invalid Job ID',
+                success: false
+            });
+        }
+
         // Fetch job by ID and populate applications along with applicant details
         const job = await Job.findById(jobId).populate({
             path: 'applications',
             options: { sort: { createdAt: -1 } },
             populate: {
-                path: 'applicant', //  'applicant' is a reference in applications
+                path: 'applicant', // 'applicant' is a reference in applications
             }
         });
 
