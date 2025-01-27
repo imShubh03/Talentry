@@ -8,8 +8,14 @@ import companyRoute from './routes/company.route.js'
 import jobRoute from './routes/job.route.js'
 import applicationRoute from './routes/application.route.js'
 
+import path from 'path';
+
 dotenv.config();
 const app = express();
+// Database connection and server setup
+const port = process.env.PORT || 3000;
+
+const _dirname = path.resolve()
 
 // Middlewares
 app.use(express.json());
@@ -24,11 +30,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-// Routes
-app.get('/', (req, res) => {
-    res.send("Hello World!");
-});
-
 
 // API routes
 app.use("/api/user", userRoute);
@@ -37,9 +38,14 @@ app.use("/api/job", jobRoute)
 app.use("/api/application", applicationRoute)
 
 
-// Database connection and server setup
-const port = process.env.PORT || 3000;
 connectDB(); // Move DB connection outside of app.listen
+
+
+app.use(express.static(path.join(_dirname, "/frontend/dist")))
+app.get('*', (_, res) => {
+    res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"))
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
