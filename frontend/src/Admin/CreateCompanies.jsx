@@ -1,9 +1,9 @@
-import Navbar from '@/components/public/Navbar';
+import Navbar from '@/components/public/Navbar.jsx';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { setSingleCompany } from '@/redux/companySlice';
-import { COMPANY_API_ENDPOINT } from '@/utils/constant';
+import { setSingleCompany } from '@/redux/companySlice.js';
+import { COMPANY_API_ENDPOINT } from '@/utils/constant.js';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';

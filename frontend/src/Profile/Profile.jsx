@@ -1,4 +1,4 @@
-import Navbar from '@/components/public/Navbar';
+import Navbar from '@/components/public/Navbar.jsx';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

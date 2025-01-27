@@ -1,8 +1,8 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { setSingleJob } from '@/redux/jobSlice';
-import store from '@/redux/store';
-import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from '@/utils/constant';
+import { setSingleJob } from '@/redux/jobSlice.js';
+import store from '@/redux/store.js';
+import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from '@/utils/constant.js';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

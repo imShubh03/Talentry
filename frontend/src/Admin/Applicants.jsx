@@ -1,11 +1,11 @@
-import Navbar from '@/components/public/Navbar';
+import Navbar from '@/components/public/Navbar.jsx';
 import React, { useEffect } from 'react';
-import ApplicantsTable from './ApplicantsTable';
+import ApplicantsTable from './ApplicantsTable.jsx';
 import axios from 'axios';
-import { APPLICATION_API_ENDPOINT } from '@/utils/constant';
+import { APPLICATION_API_ENDPOINT } from '@/utils/constant.js';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAllApplicants } from '@/redux/applicationSlice';
+import { setAllApplicants } from '@/redux/applicationSlice.js';
 
 const Applicants = () => {
     const params = useParams();

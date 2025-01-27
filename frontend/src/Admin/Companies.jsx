@@ -1,12 +1,12 @@
-import Navbar from '@/components/public/Navbar';
+import Navbar from '@/components/public/Navbar.jsx';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react';
-import CompaniesTable from './CompaniesTable';
+import CompaniesTable from './CompaniesTable.js';
 import { useNavigate } from 'react-router-dom';
-import useGetAllCompanies from '@/Custom hooks/useGetAllCompanies';
+import useGetAllCompanies from '@/Custom hooks/useGetAllCompanies.js';
 import { useDispatch } from 'react-redux';
-import { setSearchCompanyByText } from '@/redux/companySlice';
+import { setSearchCompanyByText } from '@/redux/companySlice.js';
 
 const Companies = () => {
     const navigate = useNavigate();

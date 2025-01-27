@@ -1,8 +1,8 @@
 import Navbar from '@/components/public/Navbar.jsx';
 import useGetAllJobs from '@/Custom hooks/useGetAllJobs';
-import Footer from '@/Home/Footer';
-import JobCard from '@/Jobs/JobCard';
-import { setSearchedQuery } from '@/redux/jobSlice';
+import Footer from '@/Home/Footer.jsx';
+import JobCard from '@/Jobs/JobCard.jsx';
+import { setSearchedQuery } from '@/redux/jobSlice.js';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

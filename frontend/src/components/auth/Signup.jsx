@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../public/Navbar';
+import Navbar from '../public/Navbar.jsx';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { USER_API_ENDPOINT } from '@/utils/constant';
+import { USER_API_ENDPOINT } from '@/utils/constant.js';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '@/redux/authSlice';
+import { setLoading } from '@/redux/authSlice.js';
 import { Loader2 } from 'lucide-react'; // Ensure this is correctly imported.
 
 function Signup() {

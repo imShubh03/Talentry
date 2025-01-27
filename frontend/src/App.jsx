@@ -12,11 +12,11 @@ import Companies from './Admin/Companies.jsx'
 import CreateCompanies from './Admin/CreateCompanies.jsx'
 import CompanySetup from './Admin/CompanySetup.jsx'
 import AdminJobs from './Admin/AdminJobs.jsx'
-import PostJob from './Admin/Postjob'
+import PostJob from './Admin/Postjob.jsx'
 import Applicants from './Admin/Applicants.jsx'
-import ProtectedRoute from './Admin/ProtectedRoute'
-import Privacy from './Home/Privacy'
-import TermsOfService from './Home/TermsOfService'
+import ProtectedRoute from './Admin/ProtectedRoute.jsx'
+import Privacy from './Home/Privacy.jsx'
+import TermsOfService from './Home/TermsOfService.jsx'
 
 const appRouter = createBrowserRouter([
   {
