@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+import tailwindcssAnimate from 'tailwindcss-animate';
+import daisyui from 'daisyui';
+
 export default {
     darkMode: 'class', // Enables dark mode based on the 'class' strategy
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
@@ -72,5 +75,5 @@ export default {
         base: true,
         utils: true
     },
-    plugins: [require("tailwindcss-animate"), require('daisyui')],
+    plugins: [tailwindcssAnimate, daisyui],
 };
