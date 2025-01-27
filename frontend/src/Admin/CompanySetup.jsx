@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import useGetCompanyById from '@/Custom hooks/useGetCompanyById.jsx';
 import { COMPANY_API_ENDPOINT } from '@/utils/constant';
 import axios from 'axios';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,8 +26,6 @@ const CompanySetup = () => {
     const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
-
-    
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -85,86 +83,108 @@ const CompanySetup = () => {
                 description: singleCompany.description || '',
                 website: singleCompany.website || '',
                 location: singleCompany.location || '',
-                file: singleCompany.file || null, // Clear file input on load
+                file: singleCompany.file || null,
             });
         }
     }, [singleCompany]);
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-800 dark:text-white">
             <Navbar />
-            <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
-                <form onSubmit={submitHandler}>
-                    <div className="flex items-center gap-4 mb-6">
-                        <Button variant="outline" onClick={() => navigate('/admin/companies')}>
-                            <ArrowLeft />
-                            <span className="ml-2">Back</span>
-                        </Button>
-                        <h1 className="text-2xl font-semibold text-gray-800">Company Setup</h1>
-                    </div>
+            <div className="pt-16 px-4 sm:px-6 lg:px-8 py-8 dark:bg-slate-800 dark:text-white">
+                <div className="max-w-4xl mx-auto">
+                    <form onSubmit={submitHandler} className="bg-white rounded-xl shadow-lg p-6 sm:p-8 space-y-8 dark:bg-slate-800 dark:text-white">
+                        <div className="flex items-center gap-4 border-b pb-6">
+                            <Button 
+                                variant="outline" 
+                                onClick={() => navigate('/admin/companies')}
+                                className="flex items-center gap-2 hover:bg-gray-700 dark:bg-slate-800 dark:text-white"
+                            >
+                                <ArrowLeft className="h-4 w-4" />
+                                Back
+                            </Button>
+                            <h1 className="text-2xl font-bold text-gray-900 dark:bg-slate-800 dark:text-white">Company Setup</h1>
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <Label>Company Name</Label>
-                            <Input
-                                type="text"
-                                name="name"
-                                placeholder="Enter company name"
-                                value={input.name}
-                                onChange={changeEventHandler}
-                            />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label className="text-sm font-medium">Company Name</Label>
+                                <Input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Enter company name"
+                                    value={input.name}
+                                    onChange={changeEventHandler}
+                                    className="w-full focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 dark:text-white"
+                                />
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <Label className="text-sm font-medium">Company Description</Label>
+                                <Input
+                                    type="text"
+                                    name="description"
+                                    placeholder="Enter company description"
+                                    value={input.description}
+                                    onChange={changeEventHandler}
+                                    className="w-full focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 dark:text-white"
+                                />
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <Label className="text-sm font-medium">Company Website</Label>
+                                <Input
+                                    type="text"
+                                    name="website"
+                                    placeholder="https://example.com"
+                                    value={input.website}
+                                    onChange={changeEventHandler}
+                                    className="w-full focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 dark:text-white"
+                                />
+                            </div>
+                            
+                            <div className="space-y-2">
+                                <Label className="text-sm font-medium">Company Location</Label>
+                                <Input
+                                    type="text"
+                                    name="location"
+                                    placeholder="Enter company location"
+                                    value={input.location}
+                                    onChange={changeEventHandler}
+                                    className="w-full focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 dark:text-white"
+                                />
+                            </div>
+                            
+                            <div className="space-y-2 md:col-span-2">
+                                <Label className="text-sm font-medium">Company Logo</Label>
+                                <Input
+                                    type="file"
+                                    name="file"
+                                    accept="image/*"
+                                    onChange={changeFileHandler}
+                                    className="w-full cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:bg-slate-800 dark:text-white"
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <Label>Company Description</Label>
-                            <Input
-                                type="text"
-                                name="description"
-                                placeholder="Enter company description"
-                                value={input.description}
-                                onChange={changeEventHandler}
-                            />
-                        </div>
-                        <div>
-                            <Label>Company Website</Label>
-                            <Input
-                                type="text"
-                                name="website"
-                                placeholder="https://example.com"
-                                value={input.website}
-                                onChange={changeEventHandler}
-                            />
-                        </div>
-                        <div>
-                            <Label>Company Location</Label>
-                            <Input
-                                type="text"
-                                name="location"
-                                placeholder="Enter company location"
-                                value={input.location}
-                                onChange={changeEventHandler}
-                            />
-                        </div>
-                        <div>
-                            <Label>Logo</Label>
-                            <Input
-                                type="file"
-                                name="file"
-                                accept="image/*"
-                                onChange={changeFileHandler}
-                            />
-                        </div>
-                    </div>
 
-                    <div className="mt-6 flex justify-end">
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            className={`bg-blue-600 text-white hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
-                            {loading ? 'Updating...' : 'Update'}
-                        </Button>
-                    </div>
-                </form>
+                        <div className="pt-6 border-t">
+                            <Button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-2.5 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                            >
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                        Updating...
+                                    </>
+                                ) : (
+                                    'Update Company'
+                                )}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

@@ -10,16 +10,32 @@ import { Button } from '../components/ui/button.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice.js';
+import { Code, Database, PenTool, Layers } from 'lucide-react';
 
 const categories = [
-    "Frontend Developer",
-    "Backend Developer",
-    "Data Scientist",
-    "UI/UX Designer"
+    { 
+        name: "Frontend Developer", 
+        icon: <Code className="w-6 h-6 mr-2" />,
+        color: "text-blue-600"
+    },
+    { 
+        name: "Backend Developer", 
+        icon: <Database className="w-6 h-6 mr-2" />,
+        color: "text-green-600"
+    },
+    { 
+        name: "Data Scientist", 
+        icon: <Layers className="w-6 h-6 mr-2" />,
+        color: "text-purple-600"
+    },
+    { 
+        name: "UI/UX Designer", 
+        icon: <PenTool className="w-6 h-6 mr-2" />,
+        color: "text-pink-600"
+    }
 ];
 
 function CarouselCategory() {
-
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -29,34 +45,106 @@ function CarouselCategory() {
     }
 
     return (
-        <>
-            <div className="w-full max-w-xl mx-auto my-4 px-4 dark:bg-slate-800 dark:text-white">
-                <Carousel className="relative w-full dark:bg-slate-800 dark:text-white">
-                    <CarouselContent className="flex gap-2 sm:gap-4">
+        <div className="w-full py-8 bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-800">
+            <div className="max-w-6xl mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center mb-8 
+                    text-transparent bg-clip-text 
+                    bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600
+                    dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
+                    Explore Job Categories
+                </h2>
+                
+                <Carousel 
+                    opts={{
+                        align: "start",
+                        slidesToScroll: 1,
+                    }}
+                    className="w-full"
+                >
+                    <CarouselContent className="flex gap-4">
                         {categories.map((cat, ind) => (
-                            <CarouselItem
-                                key={ind}
-                                className="flex-shrink-0 w-[75%] sm:w-[50%] lg:w-[33.33%] dark:bg-slate-800 dark:text-white"
+                            <CarouselItem 
+                                key={ind} 
+                                className="basis-[80%] sm:basis-[50%] lg:basis-[25%] p-1"
                             >
-                                <Button
-                                    onClick={() => searchJobHandler(cat)}
-                                    variant="outline"
-                                    className="w-full py-3 bg-blue-600 text-white hover:bg-sky-400 rounded-lg text-sm sm:text-base dark:bg-slate-800 dark:text-white"
-                                >
-                                    {cat}
-                                </Button>
+                                <div className="p-1">
+                                    <Button
+                                        onClick={() => searchJobHandler(cat.name)}
+                                        variant="outline"
+                                        className={`
+                                            w-full h-full py-4 px-4
+                                            flex items-center justify-center
+                                            border-2 border-transparent
+                                            bg-white dark:bg-slate-800
+                                            hover:border-blue-500
+                                            transition-all duration-300
+                                            group
+                                            shadow-lg hover:shadow-xl
+                                            rounded-xl
+                                        `}
+                                    >
+                                        <div className="flex flex-col items-center justify-center">
+                                            <div className={`
+                                                mb-3 
+                                                ${cat.color}
+                                                group-hover:scale-110 
+                                                transition-transform 
+                                                duration-300
+                                            `}>
+                                                {cat.icon}
+                                            </div>
+                                            <span className="
+                                                text-sm md:text-base 
+                                                font-semibold 
+                                                text-gray-800 
+                                                dark:text-white 
+                                                group-hover:text-blue-600 
+                                                dark:group-hover:text-blue-400 
+                                                transition-colors
+                                            ">
+                                                {cat.name}
+                                            </span>
+                                        </div>
+                                    </Button>
+                                </div>
                             </CarouselItem>
                         ))}
                     </CarouselContent>
 
                     {/* Navigation Buttons */}
                     <div className="hidden sm:block">
-                        <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 md:h-10 md:w-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-md" />
-                        <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 h-8 w-8 md:h-10 md:w-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-md" />
+                        <CarouselPrevious className="
+                            absolute -left-12 top-1/2 -translate-y-1/2 
+                            w-10 h-10 
+                            bg-white dark:bg-slate-800 
+                            text-blue-600 
+                            border-2 border-blue-600 
+                            hover:bg-blue-50 
+                            dark:hover:bg-slate-700 
+                            rounded-full 
+                            shadow-lg 
+                            hover:shadow-xl 
+                            transition-all 
+                            duration-300
+                        "/>
+                        <CarouselNext className="
+                            absolute -right-12 top-1/2 -translate-y-1/2 
+                            w-10 h-10 
+                            bg-white dark:bg-slate-800 
+                            text-blue-600 
+                            border-2 border-blue-600 
+                            hover:bg-blue-50 
+                            dark:hover:bg-slate-700 
+                            rounded-full 
+                            shadow-lg 
+                            hover:shadow-xl 
+                            transition-all 
+                            duration-300
+                        "/>
                     </div>
                 </Carousel>
             </div>
-        </>
+        </div>
     );
 }
 

@@ -1,51 +1,60 @@
 import { Badge } from '@/components/ui/badge';
 import React from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin, Clock, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-function Latestjobcards({job}) {
-    const navigate = useNavigate()
+function Latestjobcards({ job }) {
+    const navigate = useNavigate();
+
+    // Calculate dynamic "days ago"
+    const calculateDaysAgo = (date) => {
+        const createdAtDate = new Date(date);
+        const currentDate = new Date();
+        const differenceInTime = currentDate - createdAtDate;
+        const differenceInDays = Math.floor(differenceInTime / (1000 * 60 * 60 * 24));
+        return differenceInDays === 0 ? 'Today' : `${differenceInDays} days ago`;
+    };
+
     return (
-        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200 dark:bg-slate-800 dark:text-white">
+        <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300 space-y-4 dark:bg-slate-800 dark:text-white">
             {/* Company Section */}
-            <div className="mb-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-semibold text-gray-800 dark:bg-slate-800 dark:text-white">{job?.company?.name}</h2>
-                    <span className="text-sm text-blue-600 font-medium">2 days ago</span>
+            <div className="flex justify-between items-center dark:bg-slate-800 dark:text-white">
+                <div className="flex items-center space-x-3">
+                    <h3 className="text-lg font-bold text-gray-800 dark:bg-slate-800 dark:text-white">{job?.company?.name}</h3>
+                    <Badge variant="secondary" className="flex items-center space-x-1">
+                        <Clock size={14} className="text-gray-500" />
+                        <span dark:bg-slate-800 dark:text-white >{calculateDaysAgo(job?.createdAt)}</span>
+                    </Badge>
                 </div>
-                <div className="flex items-center mt-1 text-gray-600">
-                    <MapPin size={16} className="mr-1 dark:bg-slate-800 dark:text-white" />
-                    <p className="text-sm dark:bg-slate-800 dark:text-white">India</p>
+                <div className="flex items-center space-x-2 text-gray-600">
+                    <MapPin className=' dark:bg-slate-800 dark:text-white' size={16} />
+                    <span className="text-sm dark:bg-slate-800 dark:text-white">{job?.location || 'India'}</span>
                 </div>
             </div>
 
             {/* Job Details Section */}
-            <div className="mb-4">
-                <h1 className="text-xl font-bold text-blue-700 mb-2">{job?.title}</h1>
-                <p className="text-sm text-gray-600 leading-relaxed dark:bg-slate-800 dark:text-white">
-                    {job?.description}
-                </p>
+            <div className="space-y-2 ">
+                <h2 className="text-xl font-semibold text-gray-900 dark:bg-slate-800 dark:text-white">{job?.title}</h2>
+                <p className="text-gray-600 line-clamp-3 dark:bg-slate-800 dark:text-white">{job?.description}</p>
             </div>
 
             {/* Badges Section */}
-            <div className="flex flex-wrap gap-2 ">
-                <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-slate-800 dark:text-white dark:border-white">
-                    {job?.positions} Positions
+            <div className="flex space-x-2">
+                <Badge variant="outline" className="flex items-center space-x-1 dark:bg-slate-800 dark:text-white">
+                    <Briefcase size={14} />
+                    <span>{job?.positions} Positions</span>
                 </Badge>
-                <Badge variant="secondary" className="bg-green-50 text-green-700 hover:bg-green-100 dark:bg-slate-800 dark:text-white dark:border-white">
-                {job?.jobtype}
-                </Badge>
-                <Badge variant="secondary" className="bg-purple-50 text-purple-700 hover:bg-purple-100 dark:bg-slate-800 dark:text-white dark:border-white">
-                {job?.location}
-                </Badge>
+                <Badge className="dark:bg-slate-800 dark:text-white" variant="outline">{job?.jobtype}</Badge>
+                <Badge className=" dark:bg-slate-800 dark:text-white" variant="outline">{job?.location}</Badge>
             </div>
 
             {/* Apply Button */}
-            <div className="mt-4 pt-4 border-t border-gray-100">
-                <button onClick={() => navigate(`/jobs/${job._id}`)}  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200">
-                    Apply Now
-                </button>
-            </div>
+            <button
+                onClick={() => navigate(`/jobs/${job._id}`)}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-200 mt-4 flex items-center justify-center space-x-2"
+            >
+                <span>Apply Now</span>
+            </button>
         </div>
     );
 }

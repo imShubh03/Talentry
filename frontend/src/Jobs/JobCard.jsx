@@ -32,9 +32,6 @@ function JobCard({job}) {
             <p className="text-sm text-gray-500 dark:bg-slate-800 dark:text-white">India</p>
           </div>
         </div>
-        <Button variant="ghost" size="icon" className="p-2 hover:bg-gray-100 dark:hover:bg-slate-400 dark:bg-slate-800 dark:text-white">
-          <Bookmark className="h-5 w-5 text-gray-500 dark:bg-slate-800 dark:text-white" />
-        </Button>
       </CardHeader>
 
       {/* Content with Job Details */}
@@ -60,11 +57,8 @@ function JobCard({job}) {
 
       {/* Footer with Action Buttons */}
       <CardFooter className="flex gap-4 px-4 py-3">
-        <Button onClick={() => navigate(`/jobs/${job?._id}`)} className="flex-1 py-2 bg-white text-black hover:bg-sky-500 hover:text-white ">
+        <Button onClick={() => navigate(`/jobs/${job?._id}`)} className="flex-1 py-2 bg-blue-500 text-white hover:bg-sky-500 hover:text-white ">
           Details
-        </Button>
-        <Button className="flex-1 py-2 bg-blue-500 text-white hover:bg-blue-600">
-          Save For Later
         </Button>
       </CardFooter>
     </Card>

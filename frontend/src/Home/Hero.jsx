@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button.jsx';
-import { Search } from 'lucide-react';
+import { Search, CheckCircle, Award, Target } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice.js';
 
@@ -15,102 +15,143 @@ function Hero() {
         navigate("/browse")
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            searchJobHandler();
+        }
+    }
+
+    const features = [
+        {
+            icon: <CheckCircle className="w-10 h-10 text-blue-600" />,
+            title: "Easy Applications",
+            description: "Streamlined application process"
+        },
+        {
+            icon: <Award className="w-10 h-10 text-green-600" />,
+            title: "Top Recruiters",
+            description: "Connect with industry leaders"
+        },
+        {
+            icon: <Target className="w-10 h-10 text-purple-600" />,
+            title: "Personalized Jobs",
+            description: "Tailored recommendations"
+        }
+    ];
+
     return (
-        <>
-            <div className="bg-white text-blue-700 py-20 px-6 dark:bg-slate-800 dark:text-white">
-                {/* Container for central alignment of content */}
-                <div className="max-w-7xl mx-auto text-center">
-                    {/* Subheading */}
-                    <h3 className="text-2xl font-semibold">
-                        The <span className="text-orange-700">No. 1 Job</span> Hunting Platform
+        <div className="relative bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-800 py-20 px-4 overflow-hidden">
+            {/* Subtle Background Shapes */}
+            <div className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none">
+                <div className="absolute -top-20 -left-20 w-96 h-96 bg-blue-100 dark:bg-blue-900 rounded-full opacity-20 blur-3xl"></div>
+                <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-purple-100 dark:bg-purple-900 rounded-full opacity-20 blur-3xl"></div>
+            </div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* Hero Content */}
+                <div className="text-center max-w-4xl mx-auto">
+                    <h3 className="text-xl md:text-2xl font-medium text-blue-600 dark:text-blue-400 mb-4">
+                        The <span className="font-bold text-orange-600">No. 1 Job</span> Hunting Platform
                     </h3>
 
-                    {/* Main Heading */}
-                    <h1 className="text-4xl md:text-6xl font-bold leading-tight text-blue-700 dark:bg-slate-800 dark:text-white">
+                    <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 
+                        text-transparent bg-clip-text bg-gradient-to-r 
+                        from-blue-600 via-purple-600 to-pink-600 
+                        dark:from-blue-400 dark:via-purple-400 dark:to-pink-400">
                         Discover Opportunities That Match Your Ambitions
                     </h1>
 
-                    {/* Paragraph with a brief description */}
-                    <p className="mt-4 mb-8 text-lg md:text-xl text-blue-700 dark:bg-slate-800 dark:text-white">
+                    <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
                         Empowering professionals to find tailored jobs and connect with top recruiters, effortlessly.
                     </p>
 
-                    
-                    {/* Search Component with proper spacing */}
-                    <div className="w-full max-w-3xl mx-auto px-4 mb-8">
-                        <div className="flex items-stretch gap-0">
-                            <div className="relative flex-1">
+                    {/* Search Component */}
+                    <div className="w-full max-w-3xl mx-auto mb-12">
+                        <div className="relative flex shadow-lg rounded-full overflow-hidden">
+                            <div className="flex-grow">
                                 <input
-                                    onChange={(e) => setQuery(e.target.value)}
                                     type="text"
-                                    placeholder="Search jobs here"
-                                    className="w-full h-11 px-4 rounded-l-lg border border-r-0 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all dark:bg-slate-800 dark:text-white"
+                                    placeholder="Search jobs here..."
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                    className="w-full h-14 px-6 text-lg 
+                                        border-none 
+                                        bg-white dark:bg-slate-700 
+                                        text-gray-900 dark:text-white
+                                        focus:outline-none 
+                                        focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
                             <button
                                 onClick={searchJobHandler}
-                                className="h-11 px-4 bg-blue-600 hover:bg-blue-700 rounded-r-lg border border-blue-600 hover:border-blue-700 transition-colors duration-200 flex items-center justify-center group"
+                                className="w-16 md:w-20 bg-blue-600 hover:bg-blue-700 
+                                    flex items-center justify-center 
+                                    transition-colors duration-300 
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                                <Search
-                                    className="text-white group-hover:scale-105 transition-transform duration-200"
-                                    size={20}
-                                />
+                                <Search className="text-white w-6 h-6" />
                             </button>
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex justify-center gap-4">
-                        {/* Sign-Up Button */}
+                    {/* Call to Action Buttons */}
+                    <div className="flex justify-center space-x-4 mb-16">
                         <Link to="/signup">
-                            <Button className="bg-blue-700 text-white hover:bg-sky-700 py-3 px-6 rounded-md font-semibold">
+                            <Button className="
+                                bg-blue-600 text-white 
+                                hover:bg-blue-700 
+                                px-8 py-3 
+                                rounded-full 
+                                shadow-lg 
+                                hover:shadow-xl 
+                                transition-all 
+                                duration-300">
                                 Get Started
                             </Button>
                         </Link>
-
-                        {/* Jobs Exploration Button */}
                         <Link to="/jobs">
-                            <Button className="bg-gray-100 border border-gray-300 text-gray-800 hover:bg-gray-200 py-3 px-6 rounded-md font-semibold">
+                            <Button variant="outline" className="
+                                border-2 border-blue-600 
+                                text-blue-600 
+                                hover:bg-blue-50 
+                                px-8 py-3 
+                                rounded-full 
+                                transition-colors 
+                                duration-300">
                                 Explore Jobs
                             </Button>
                         </Link>
                     </div>
-                </div>
 
-                {/* Feature Icons Section */}
-                <div className="mt-10 flex justify-center gap-8">
-                    {/* Easy Applications Feature */}
-                    <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 text-gray-800 p-4 rounded-full shadow-md">
-                            <svg className="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h11M9 21v-6m5-4V3l7 7-7 7z" />
-                            </svg>
-                        </div>
-                        <p className="mt-4 text-lg text-gray-700 dark:bg-slate-800 dark:text-white">Easy Applications</p>
-                    </div>
-
-                    {/* Top Recruiters Feature */}
-                    <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 text-gray-800 p-4 rounded-full shadow-md">
-                            <svg className="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12h5m-2.5-2.5V21m0 0L12 18.5m0 0L5 21V9m12.5-2.5H20m0-5H5" />
-                            </svg>
-                        </div>
-                        <p className="mt-4 text-lg text-gray-700 dark:bg-slate-800 dark:text-white">Top Recruiters</p>
-                    </div>
-
-                    {/* Personalized Jobs Feature */}
-                    <div className="flex flex-col items-center">
-                        <div className="bg-gray-100 text-gray-800 p-4 rounded-full shadow-md">
-                            <svg className="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0-5c7.18 0 13 5.82 13 13s-5.82 13-13 13S-1 18.18-1 11C-1 3.82 4.82-1 12-1z" />
-                            </svg>
-                        </div>
-                        <p className="mt-4 text-lg text-gray-700 dark:bg-slate-800 dark:text-white">Personalized Jobs</p>
+                    {/* Features Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        {features.map((feature, index) => (
+                            <div 
+                                key={index} 
+                                className="
+                                    bg-white dark:bg-slate-800 
+                                    p-6 rounded-xl 
+                                    shadow-lg hover:shadow-xl 
+                                    transition-all duration-300 
+                                    transform hover:-translate-y-2
+                                    border border-gray-100 dark:border-slate-700"
+                            >
+                                <div className="mb-4 flex justify-center">
+                                    {feature.icon}
+                                </div>
+                                <h4 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
+                                    {feature.title}
+                                </h4>
+                                <p className="text-gray-600 dark:text-gray-400">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

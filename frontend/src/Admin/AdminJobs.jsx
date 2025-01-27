@@ -20,26 +20,30 @@ const AdminJobs = () => {
     }, [input])
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-50 dark:bg-slate-800 dark:text-white">
             <Navbar />
-            <div className="max-w-6xl mx-auto my-10 p-4">
-                {/* Header Section */}
-                <div className="flex justify-between items-center mb-6">
-                    <Input
-                        className="w-72 border-gray-300 rounded-md shadow-sm"
-                        placeholder="Filter by name, role   "
-                        onChange = {(e) => setInput(e.target.value)}
-                    />
-                    <Button
-                        onClick={() => navigate("/admin/jobs/create")}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700"
-                    >
-                        New Job
-                    </Button>
-                </div>
+            <div className="pt-16"> {/* Add padding-top to prevent navbar overlap */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    {/* Header Section */}
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+                        <Input
+                            className="w-full sm:w-72 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-800 dark:text-white"
+                            placeholder="Filter by name, role..."
+                            onChange={(e) => setInput(e.target.value)}
+                        />
+                        <Button
+                            onClick={() => navigate("/admin/jobs/create")}
+                            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
+                        >
+                            New Job
+                        </Button>
+                    </div>
 
-                {/* Table Section */}
-                <AdminJobsTable />
+                    {/* Table Section with shadow and rounded corners */}
+                    <div className="bg-white rounded-lg shadow-md">
+                        <AdminJobsTable />
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,18 +1,16 @@
 import Navbar from '@/components/public/Navbar';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Contact, Mail, Pen } from 'lucide-react';
+import { Contact, Mail, Pen, FileText, UserCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import Appliedjobs from './Appliedjobs.jsx';
 import UpdateProfileDialog from './UpdateProfileDialog.jsx';
 import { useSelector } from 'react-redux';
 import useGetAppliedJobs from '@/Custom hooks/useGetAppliedJobs.jsx';
-// const skills = ['html', 'css', 'js', 'react'];
 
 function Profile() {
-    
     useGetAppliedJobs();
 
     const haveResume = true;
@@ -20,82 +18,112 @@ function Profile() {
 
     const {user} = useSelector(store => store.auth)
 
+    // Function to get initials for avatar fallback
+    const getInitials = (name) => {
+        return name ? name.split(' ').map(n => n[0]).join('').toUpperCase() : 'UN';
+    }
 
     return (
-        <div>
+        <div className="bg-gray-50 min-h-screen mt-16">
             <Navbar />
             <div className="max-w-5xl mx-auto p-4">
-                {/* Main Container with Shadow and Border */}
-                <div className="border shadow-md rounded-lg p-6 space-y-8">
-                    {/* Profile Header */}
-                    <div className="flex flex-col md:flex-row items-center md:items-start justify-between space-y-6 md:space-y-0">
-                        <div className="flex items-center gap-6">
-                            <Avatar className="h-24 w-24">
-                                <AvatarImage
-                                    alt="profile"
-                                    src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"
-                                />
-                            </Avatar>
-                            <div  >
-                                <h1 className="text-lg font-bold dark:bg-slate-800 dark:text-white">{user?.name}</h1>
-                                <p className="text-sm text-gray-500 dark:bg-slate-800 dark:text-white">
-                                    {user?.profile?.bio}
-                                </p>
+                {/* Main Container with Enhanced Shadow and Border */}
+                <div className="bg-white border border-gray-100 shadow-lg rounded-xl overflow-hidden">
+                    {/* Profile Header with Gradient Background */}
+                    <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6">
+                        <div className="flex flex-col md:flex-row items-center md:items-start justify-between space-y-6 md:space-y-0">
+                            <div className="flex items-center gap-6">
+                                <Avatar className="h-28 w-28 border-4 border-white shadow-md">
+                                    <AvatarImage
+                                        alt="profile"
+                                        src={user?.profile?.profilePhoto}
+                                    />
+                                    <AvatarFallback className="bg-blue-100 text-blue-600">
+                                        {getInitials(user?.name)}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div>
+                                    <h1 className="text-xl font-bold text-gray-800">{user?.name}</h1>
+                                    <p className="text-sm text-gray-600">
+                                        {user?.profile?.bio || 'No bio available'}
+                                    </p>
+                                </div>
+                            </div>
+                            <Button 
+                                variant="outline" 
+                                size="icon" 
+                                onClick={() => setOpen(true)} 
+                                className="hover:bg-blue-50 transition-colors"
+                            >
+                                <Pen className="w-4 h-4 text-gray-600" />
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Profile Details Container */}
+                    <div className="p-6 space-y-6">
+                        {/* Contact Information */}
+                        <div className="border-b pb-6">
+                            <div className="flex items-center gap-3 text-sm text-gray-700">
+                                <Mail className="w-5 h-5 text-blue-600" />
+                                <span className="font-medium">{user?.email}</span>
                             </div>
                         </div>
-                        <Button onClick={() => setOpen(true)} className=' bg-white '>
-                            <Pen className="w-4 h-4 bg-white text-black " />
-                        </Button>
-                    </div>
 
-                    {/* Contact Information */}
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <Mail className="w-4 h-4 dark:bg-slate-800 dark:text-white" />
-                            <span className=' dark:bg-slate-800 dark:text-white'>{user?.email}</span>
+                        {/* Skills Section */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <UserCircle className="w-5 h-5 text-blue-600" />
+                                <h2 className="text-lg font-semibold text-gray-800">Skills</h2>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {user?.profile?.skills.length !== 0
+                                    ? user?.profile?.skills.map((item, index) => (
+                                        <Badge 
+                                            key={index} 
+                                            variant="secondary" 
+                                            className="px-3 py-1 rounded-full"
+                                        >
+                                            {item}
+                                        </Badge>
+                                    ))
+                                    : <span className="text-sm text-gray-500">No skills added</span>}
+                            </div>
+                        </div>
+
+                        {/* Resume Section */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                                <FileText className="w-5 h-5 text-blue-600" />
+                                <Label className="text-base font-semibold text-gray-800">Resume</Label>
+                            </div>
+                            {haveResume ? (
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href={user?.profile?.resume}
+                                    className="text-blue-600 hover:underline text-sm flex items-center gap-2 bg-blue-50 p-2 rounded-md"
+                                >
+                                    <FileText className="w-4 h-4" />
+                                    {user?.profile?.resumeName || 'View Resume'}
+                                </a>
+                            ) : (
+                                <span className="text-sm text-gray-500">No resume uploaded</span>
+                            )}
+                        </div>
+
+                        {/* Applied Jobs */}
+                        <div className="space-y-3">
+                            <div className="flex items-center gap-2 border-t pt-6">
+                                <Contact className="w-5 h-5 text-blue-600" />
+                                <h1 className="text-lg font-semibold text-gray-800">Applied Jobs</h1>
+                            </div>
+                            <Appliedjobs />
                         </div>
                     </div>
-
-                    {/* Skills Section */}
-                    <div>
-                        <h2 className="text-lg font-semibold">Skills</h2>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            {user?.profile?.skills.length !== 0
-                                ? user?.profile?.skills.map((item, index) => (
-                                    <Badge key={index} className="bg-blue-50 text-blue-700">
-                                        {item}
-                                    </Badge>
-                                ))
-                                : <span className="text-sm text-gray-500">NA</span>}
-                        </div>
-                    </div>
-
-                    {/* Resume Section */}
-                    <div className="grid w-full space-y-2">
-                        <Label className="text-sm font-semibold">Resume</Label>
-                        {haveResume ? (
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href={user?.profile?.resume}
-                                className="text-blue-600 hover:underline text-sm"
-                            >
-                                {user?.profile?.resumeName}
-                            </a>
-                        ) : (
-                            <span className="text-sm text-gray-500">NA</span>
-                        )}
-                    </div>
-
-                    {/* Applied Jobs */}
-                    <div>
-                        <h1 className="text-lg font-semibold mb-4">Applied Jobs</h1>
-                        <Appliedjobs />
-                    </div>
-
-                    <UpdateProfileDialog open={open} setOpen={setOpen} />
-
                 </div>
+
+                <UpdateProfileDialog open={open} setOpen={setOpen} />
             </div>
         </div>
     );

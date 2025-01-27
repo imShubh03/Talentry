@@ -6,22 +6,35 @@ import { setUser } from '@/redux/authSlice';
 import { USER_API_ENDPOINT } from '@/utils/constant';
 import axios from 'axios';
 import { Loader2, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
-    const [loading, setLoading] = useState(false);
     const { user } = useSelector((store) => store.auth);
     const dispatch = useDispatch();
 
     const [input, setInput] = useState({
-        name: user?.name,
-        email: user?.email,
-        bio: user?.profile?.bio,
-        skills: user?.profile?.skills,
+        name: '',
+        email: '',
+        bio: '',
+        skills: '',
         file: null,
     });
+    const [loading, setLoading] = useState(false);
+
+    // Reset form when dialog opens
+    useEffect(() => {
+        if (open) {
+            setInput({
+                name: user?.name || '',
+                email: user?.email || '',
+                bio: user?.profile?.bio || '',
+                skills: user?.profile?.skills || '',
+                file: null,
+            });
+        }
+    }, [open, user]);
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -47,13 +60,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         }
 
         try {
-            setLoading(true)
             const res = await axios.post(
                 `${USER_API_ENDPOINT}/profile/update`,
                 formData,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data', // Corrected typo: 'muiltipart' -> 'multipart'
+                        'Content-Type': 'multipart/form-data',
                     },
                     withCredentials: true,
                 }

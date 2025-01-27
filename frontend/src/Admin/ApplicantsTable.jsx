@@ -24,16 +24,16 @@ const ApplicantsTable = () => {
         }
     }
     return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+        <div className="p-4 bg-white rounded-lg shadow-md dark:bg-slate-800 dark:text-white">
             <Table>
-                <TableCaption className="text-gray-500">Recent applied users</TableCaption>
+                <TableCaption className="text-gray-500 dark:bg-slate-800 dark:text-white">Recent applied users</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Full Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Resume</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead className="text-right">Action</TableHead>
+                        <TableHead className=" dark:bg-slate-800 dark:text-white">Full Name</TableHead>
+                        <TableHead className=" dark:bg-slate-800 dark:text-white">Email</TableHead>
+                        <TableHead className=" dark:bg-slate-800 dark:text-white">Resume</TableHead>
+                        <TableHead className=" dark:bg-slate-800 dark:text-white">Date</TableHead>
+                        <TableHead className="text-right dark:bg-slate-800 dark:text-white">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -54,12 +54,12 @@ const ApplicantsTable = () => {
                                         <PopoverTrigger>
                                             <MoreHorizontal className="cursor-pointer" />
                                         </PopoverTrigger>
-                                        <PopoverContent className="w-32">
+                                        <PopoverContent className="w-32 dark:bg-slate-800 dark:text-white">
                                             {shortlistingStatus.map((status, index) => (
                                                 <div
                                                     onClick={() => updateStatusHandler(status, item?._id)}
                                                     key={index}
-                                                    className="p-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                                    className="p-2 hover:bg-gray-100 cursor-pointer text-sm dark:bg-slate-800 dark:text-white"
                                                 >
                                                     {status}
                                                 </div>
