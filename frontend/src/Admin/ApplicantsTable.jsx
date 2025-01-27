@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { APPLICATION_API_ENDPOINT } from '@/utils/constant';
+import { APPLICATION_API_ENDPOINT } from '@/utils/constant.js';
 import axios from 'axios';
 import { MoreHorizontal } from 'lucide-react';
 import React from 'react';

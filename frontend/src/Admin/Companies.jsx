@@ -2,9 +2,9 @@ import Navbar from '@/components/public/Navbar.jsx';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react';
-import CompaniesTable from './CompaniesTable.js';
+import CompaniesTable from './CompaniesTable.jsx';
 import { useNavigate } from 'react-router-dom';
-import useGetAllCompanies from '@/Custom hooks/useGetAllCompanies.js';
+import useGetAllCompanies from '@/Custom hooks/useGetAllCompanies.jsx';
 import { useDispatch } from 'react-redux';
 import { setSearchCompanyByText } from '@/redux/companySlice.js';
 
