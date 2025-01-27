@@ -2,7 +2,7 @@ import Navbar from '@/components/public/Navbar.jsx';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react';
-import CompaniesTable from './CompaniesTable/.jsx';
+import CompaniesTable from './CompaniesTable.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useGetAllAdminJobs from '@/Custom hooks/useGetAllAdminJobs.jsx';
