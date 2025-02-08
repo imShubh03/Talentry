@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'https://talentry-3.onrender.com',
     credentials: true,
 };
 app.use(cors(corsOptions));
